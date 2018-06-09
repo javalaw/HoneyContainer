@@ -2,17 +2,25 @@
 /**
  * the service container of honey
  */
-namespace Honey;
+
+namespace Honey\Container;
 
 
+use Honey\Container\Exception\ContainerException;
+use Honey\Container\Exception\ContainerNotFoundException;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
 
+/**
+ * Class Container
+ * @package Honey\Container
+ */
 class Container implements ContainerInterface
 {
 
     protected static $services = [];
+
     /**
      * Finds an entry of the container by its identifier and returns it.
      *
@@ -25,8 +33,8 @@ class Container implements ContainerInterface
      */
     public function get($id)
     {
-        if (!$this->exists($id)){
-            //todo: throw not found exception
+        if (!$this->exists($id)) {
+            throw (new ContainerNotFoundException());
         }
         return self::$services[$id];
     }
@@ -42,7 +50,7 @@ class Container implements ContainerInterface
      *
      * @return bool
      */
-    public function has($id):bool
+    public function has($id): bool
     {
         return $this->exists($id);
     }
@@ -51,8 +59,22 @@ class Container implements ContainerInterface
      * @param string $id
      * @return bool
      */
-    public function exists(string $id):bool
+    public function exists(string $id): bool
     {
         return isset(static::$services[$id]);
+    }
+
+    /**
+     * @param string $abstract
+     * @param string $concrete
+     * @return bool
+     */
+    public function bind(string $abstract, string $concrete): bool
+    {
+        if (isset(self::$services[$abstract])){
+            return false;
+        }
+        self::$services[$abstract] = $concrete;
+        return true;
     }
 }

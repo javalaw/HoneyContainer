@@ -14,5 +14,8 @@
     },
     "provides": {
         "psr/container-implementation": "1.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7.2"
     }
 }
