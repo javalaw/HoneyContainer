@@ -1,5 +1,5 @@
 {
-    "name": "honey-php/honey-contianer",
+    "name": "honey-php/honey-container",
     "description": "a php ioc container",
     "type": "library",
     "license": "apache",
@@ -9,6 +9,9 @@
             "email": "739554820@qq.com"
         }
     ],
+    "autoload": {
+        "psr-4": {"Honey\\": "src/"}
+    },
     "require": {
         "psr/container": "^1.0"
     },
